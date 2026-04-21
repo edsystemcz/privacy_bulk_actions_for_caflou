@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propagační screenshoty pro Caflou Privacy Bulk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #E86262;
+            --brand-blue: #3F468E;
+            --brand-green: #469B77;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #e2e8f0;
+            padding: 50px;
+        }
+        .screenshot-container {
+            width: 1280px;
+            height: 800px;
+            background: white;
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .sidebar {
+            width: 400px;
+            height: 100%;
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 10;
+        }
+        .main-content {
+            flex: 1;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+        .app-screenshot {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cbd5e1;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.2;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREENSHOT 1: ÚVOD -->
+    <div id="slide-1" class="screenshot-container">
+        <div class="sidebar">
+            <div class="badge bg-[#469B77]">Nová funkce</div>
+            <h1 class="text-4xl font-extrabold mb-6 leading-tight">Hromadná správa práv v Caflou</h1>
+            <p class="text-lg opacity-80 font-medium">
+                Přidejte do rozhraní tři chytrá tlačítka pro bleskové nastavení soukromí celého týmu.
+            </p>
+            <div class="mt-10 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-white"></div>
+                    <span>Projekty, Úkoly i Události</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-white"></div>
+                    <span>Jednoduché a bezpečné</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="blob bg-[#3F468E] w-96 h-96 -top-20 -right-20 rounded-full"></div>
+            <img src="01-extension-ready-to-start.png" class="app-screenshot relative z-10" alt="Rozšíření připraveno">
+        </div>
+    </div>
+
+    <!-- SCREENSHOT 2: PRŮBĚH -->
+    <div id="slide-2" class="screenshot-container">
+        <div class="sidebar">
+            <div class="badge bg-[#E86262]">Úspora času</div>
+            <h1 class="text-4xl font-extrabold mb-6 leading-tight">Automatické stránkování</h1>
+            <p class="text-lg opacity-80 font-medium">
+                Rozšíření samo projde všechny stránky se seznamem uživatelů a aplikuje změny za vás.
+            </p>
+            <div class="mt-10 p-6 bg-white/10 rounded-2xl border border-white/20">
+                <p class="text-sm italic">"Už žádné ruční proklikávání desítek stránek u velkých projektů."</p>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="blob bg-[#E86262] w-96 h-96 -bottom-20 -right-20 rounded-full"></div>
+            <img src="02-extension-in-progress.png" class="app-screenshot relative z-10" alt="Probíhající akce">
+        </div>
+    </div>
+
+    <!-- SCREENSHOT 3: HOTOVO -->
+    <div id="slide-3" class="screenshot-container">
+        <div class="sidebar">
+            <div class="badge bg-[#469B77]">Efektivita</div>
+            <h1 class="text-4xl font-extrabold mb-6 leading-tight">Hotovo během vteřin</h1>
+            <p class="text-lg opacity-80 font-medium">
+                Po dokončení hromadné akce stačí jednou kliknout na "Uložit" a máte hotovo.
+            </p>
+            <div class="mt-10 space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">✅</span>
+                    <span>100% lokální a bezpečné</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">✅</span>
+                    <span>Žádný sběr dat</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="blob bg-[#469B77] w-96 h-96 -top-20 -left-20 rounded-full"></div>
+            <img src="03-extension-finished.png" class="app-screenshot relative z-10" alt="Akce dokončena">
+        </div>
+    </div>
+
+    <!-- Exportní instrukce -->
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
+        <h2 class="text-2xl font-bold mb-4">Jak vyexportovat screenshoty:</h2>
+        <ol class="list-decimal ml-6 space-y-2 text-slate-600">
+            <li>Ujistěte se, že máte soubory <strong>01...png, 02...png a 03...png</strong> ve stejné složce jako tento HTML soubor.</li>
+            <li>Otevřete tento soubor v prohlížeči Chrome.</li>
+            <li>Stiskněte <strong>F12</strong> a aktivujte nástroj pro výběr elementu (Ctrl+Shift+C).</li>
+            <li>Klikněte na kontejner screenshotu (např. <code>div#slide-1</code>).</li>
+            <li>V DevTools stiskněte <strong>Ctrl+Shift+P</strong>, napište <strong>"Capture node screenshot"</strong> a potvrďte.</li>
+            <li>Prohlížeč vám stáhne čistý PNG obrázek v rozměru 1280x800 px připravený pro Web Store.</li>
+        </ol>
+    </div>
+
+</body>
+</html>
