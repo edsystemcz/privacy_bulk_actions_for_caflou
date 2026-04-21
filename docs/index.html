@@ -199,10 +199,10 @@
             </p>
             <div class="flex justify-center gap-6">
                 <a href="https://github.com/iqlogic/privacy_bulk_actions_for_caflou" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a>
-                <a href="#privacy" onclick="openPrivacy()" class="hover:text-white transition-colors cursor-pointer">
+                <button onclick="toggleModal()" class="hover:text-white transition-colors">
                     <span lang-content="cs">Ochrana osobních údajů</span>
                     <span lang-content="en">Privacy Policy</span>
-                </a>
+                </button>
             </div>
         </div>
     </footer>
@@ -287,37 +287,10 @@
             modal.classList.toggle('opacity-0');
             modal.classList.toggle('pointer-events-none');
             body.classList.toggle('modal-active');
-            
-            // Vymazat hash z URL při zavření, aby příště opět fungovala detekce změny
-            if (modal.classList.contains('opacity-0')) {
-                if (window.location.hash === '#privacy') {
-                    history.pushState("", document.title, window.location.pathname + window.location.search);
-                }
-            }
         }
 
-        // Pomocná funkce pro bezpečné otevření (aby toggle náhodou nezavřel již otevřené okno)
-        function openPrivacy() {
-            const modal = document.querySelector('#privacy-modal');
-            if (modal.classList.contains('opacity-0')) {
-                toggleModal();
-            }
-        }
-
-        window.onload = () => {
-            setLanguage('cs');
-            // Kontrola hashe při prvním načtení
-            if (window.location.hash === '#privacy') {
-                openPrivacy();
-            }
-        };
-
-        // Reakce na kliknutí na odkaz s hashem nebo změnu v adresním řádku
-        window.addEventListener('hashchange', () => {
-            if (window.location.hash === '#privacy') {
-                openPrivacy();
-            }
-        });
+        // Initialize language
+        window.onload = () => setLanguage('cs');
     </script>
 </body>
 </html>
