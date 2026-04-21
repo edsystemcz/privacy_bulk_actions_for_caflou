@@ -199,10 +199,10 @@
             </p>
             <div class="flex justify-center gap-6">
                 <a href="https://github.com/iqlogic/privacy_bulk_actions_for_caflou" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a>
-                <button onclick="toggleModal()" class="hover:text-white transition-colors">
+                <a href="#privacy" onclick="toggleModal()" class="hover:text-white transition-colors cursor-pointer">
                     <span lang-content="cs">Ochrana osobních údajů</span>
                     <span lang-content="en">Privacy Policy</span>
-                </button>
+                </a>
             </div>
         </div>
     </footer>
@@ -289,8 +289,21 @@
             body.classList.toggle('modal-active');
         }
 
-        // Initialize language
-        window.onload = () => setLanguage('cs');
+        window.onload = () => {
+            setLanguage('cs');
+            if (window.location.hash === '#privacy') {
+                toggleModal();
+            }
+        };
+
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash === '#privacy') {
+                const modal = document.querySelector('#privacy-modal');
+                if (modal.classList.contains('opacity-0')) {
+                    toggleModal();
+                }
+            }
+        });
     </script>
 </body>
 </html>
