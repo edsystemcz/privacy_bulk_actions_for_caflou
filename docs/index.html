@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cz">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -172,7 +172,7 @@
                         <span lang-content="en">Privacy First</span>
                     </h2>
                     <p class="text-slate-600 mb-6">
-                        <span lang-content="cs">Respektujeme vaše soukromí. Rozšíření běží lokálně ve vašem prohlížeči. Neshromažďuje ani neodesílá žádná data na externí servery.</span>
+                        <span lang-content="cs">Respektujeme vaše soukromí. Rozšíření běálně ve vašem prohlížeči. Neshromažďuje ani neodesílá žádná data na externí servery.</span>
                         <span lang-content="en">We respect your privacy. This extension runs locally in your browser and does not collect or transmit any data to external servers.</span>
                     </p>
                     <button onclick="toggleModal()" class="text-indigo-600 font-semibold hover:text-indigo-700 underline decoration-indigo-200 underline-offset-4">
@@ -199,10 +199,10 @@
             </p>
             <div class="flex justify-center gap-6">
                 <a href="https://github.com/iqlogic/privacy_bulk_actions_for_caflou" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a>
-                <button onclick="toggleModal()" class="hover:text-white transition-colors">
+                <a href="#privacy" onclick="openPrivacy(); return false;" class="hover:text-white transition-colors cursor-pointer">
                     <span lang-content="cs">Ochrana osobních údajů</span>
                     <span lang-content="en">Privacy Policy</span>
-                </button>
+                </a>
             </div>
         </div>
     </footer>
@@ -284,13 +284,43 @@
         function toggleModal() {
             const body = document.querySelector('body');
             const modal = document.querySelector('#privacy-modal');
+            if (!modal) return;
+
             modal.classList.toggle('opacity-0');
             modal.classList.toggle('pointer-events-none');
             body.classList.toggle('modal-active');
+            
+            // Vymazat hash z URL při zavření, aby příště opět fungovala detekce změny (hashchange)
+            if (modal.classList.contains('opacity-0')) {
+                if (window.location.hash === '#privacy') {
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                }
+            }
         }
 
-        // Initialize language
-        window.onload = () => setLanguage('cs');
+        // Pomocná funkce pro bezpečné otevření (zabrání nechtěnému zavření, pokud už je okno otevřené)
+        function openPrivacy() {
+            const modal = document.querySelector('#privacy-modal');
+            if (modal && modal.classList.contains('opacity-0')) {
+                toggleModal();
+            }
+        }
+
+        // Inicializace při načtení stránky
+        window.addEventListener('load', () => {
+            setLanguage('cs');
+            // Automatické otevření pokud URL obsahuje #privacy
+            if (window.location.hash === '#privacy') {
+                openPrivacy();
+            }
+        });
+
+        // Sledování změn v URL (kotvy) bez nutnosti reloadu
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash === '#privacy') {
+                openPrivacy();
+            }
+        });
     </script>
 </body>
 </html>
