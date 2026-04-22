@@ -15,6 +15,18 @@
         html[lang="en"] [lang-content="en"] { display: block; }
         .modal { transition: opacity 0.25s ease; }
         body.modal-active { overflow: hidden; }
+        
+        /* Animace pro Lightbox */
+        @keyframes slideInRight {
+            from { transform: translateX(40px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-40px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-right { animation: slideInRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .slide-in-left { animation: slideInLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -354,13 +366,42 @@
             <svg class="w-6 h-6 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
 
-        <!-- Zobrazený obrázek -->
-        <div class="relative z-10 max-w-[95vw] max-h-[90vh]">
-            <img id="lightbox-img" src="" alt="Detail obrazovky" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+        <!-- Zobrazený obrázek a popisek -->
+        <div class="relative z-10 max-w-[95vw] max-h-[90vh] flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="Detail obrazovky" class="max-w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-lg shadow-2xl">
+            <p id="lightbox-caption" class="text-white text-center mt-4 text-sm sm:text-base font-medium drop-shadow-md"></p>
         </div>
     </div>
 
     <script>
+        // --- Lightbox Data s popisky ---
+        const lightboxData = [
+            { 
+                src: '01-extension-ready-to-start.png', 
+                caption: { 
+                    cs: 'Nová tlačítka pro hromadnou správu v záložce Soukromí', 
+                    en: 'New bulk management buttons in the Privacy tab' 
+                } 
+            },
+            { 
+                src: '02-extension-in-progress.png', 
+                caption: { 
+                    cs: 'Automatické procházení stránek a aplikace změn', 
+                    en: 'Automatic page traversal and application of changes' 
+                } 
+            },
+            { 
+                src: '03-extension-finished.png', 
+                caption: { 
+                    cs: 'Dokončeno. Stačí udělit individuální práva a uložit.', 
+                    en: 'Finished. Just grant individual permissions and save.' 
+                } 
+            }
+        ];
+        let currentLightboxIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
         function setLanguage(lang) {
             document.documentElement.setAttribute('lang', lang);
             const btnCs = document.getElementById('btn-cs');
@@ -374,6 +415,12 @@
                 btnCs.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
                 btnEn.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
                 btnEn.classList.add('text-slate-500');
+            }
+            
+            // Překlad popisku, pokud je lightbox zrovna otevřený
+            const captionEl = document.getElementById('lightbox-caption');
+            if (captionEl && typeof currentLightboxIndex !== 'undefined' && lightboxData[currentLightboxIndex]) {
+                captionEl.innerText = lightboxData[currentLightboxIndex].caption[lang];
             }
         }
 
@@ -403,22 +450,20 @@
             }
         }
 
-        // --- Lightbox Logic ---
-        const lightboxImages = [
-            '01-extension-ready-to-start.png',
-            '02-extension-in-progress.png',
-            '03-extension-finished.png'
-        ];
-        let currentLightboxIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
-
+        // --- Lightbox Logika s animacemi ---
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            const captionEl = document.getElementById('lightbox-caption');
+            const currentLang = document.documentElement.getAttribute('lang') || 'cs';
             
-            lightboxImg.src = lightboxImages[currentLightboxIndex];
+            lightboxImg.src = lightboxData[currentLightboxIndex].src;
+            captionEl.innerText = lightboxData[currentLightboxIndex].caption[currentLang];
+            
+            // Resetování animací při otevření
+            lightboxImg.classList.remove('slide-in-right', 'slide-in-left');
+            
             lightbox.classList.remove('opacity-0', 'pointer-events-none');
             document.body.classList.add('modal-active');
         }
@@ -438,13 +483,27 @@
             currentLightboxIndex += step;
             // Zajištění nekonečného cyklení (loop) při přepínání
             if (currentLightboxIndex < 0) {
-                currentLightboxIndex = lightboxImages.length - 1;
-            } else if (currentLightboxIndex >= lightboxImages.length) {
+                currentLightboxIndex = lightboxData.length - 1;
+            } else if (currentLightboxIndex >= lightboxData.length) {
                 currentLightboxIndex = 0;
             }
             
             const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = lightboxImages[currentLightboxIndex];
+            const captionEl = document.getElementById('lightbox-caption');
+            const currentLang = document.documentElement.getAttribute('lang') || 'cs';
+            
+            lightboxImg.src = lightboxData[currentLightboxIndex].src;
+            captionEl.innerText = lightboxData[currentLightboxIndex].caption[currentLang];
+            
+            // Aplikace animačního efektu
+            lightboxImg.classList.remove('slide-in-right', 'slide-in-left');
+            void lightboxImg.offsetWidth; // Trigger reflow pro restart animace
+            
+            if (step > 0) {
+                lightboxImg.classList.add('slide-in-right');
+            } else {
+                lightboxImg.classList.add('slide-in-left');
+            }
         }
 
         // --- Swipe Gestures pro dotyková zařízení ---
@@ -462,11 +521,11 @@
         function handleSwipe() {
             const swipeThreshold = 50; // Minimální posun v pixelech pro rozpoznání gesta
             if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe doleva -> další obrázek
+                // Swipe doleva -> další obrázek (s animací zprava)
                 changeLightboxImage(1);
             }
             if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe doprava -> předchozí obrázek
+                // Swipe doprava -> předchozí obrázek (s animací zleva)
                 changeLightboxImage(-1);
             }
         }
