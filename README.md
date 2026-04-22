@@ -20,7 +20,7 @@ Výrazně tím urychluje práci při nastavování složitějších oprávnění
 ### Instalace
 
 **Z Google Chrome Web Store (Doporučeno)**
-1. Přejděte na stránku rozšíření v [Google Chrome Web Store](https://chrome.google.com/webstore) *(odkaz bude doplněn po publikaci)*.
+1. Přejděte na stránku rozšíření v [Google Chrome Web Store](https://chromewebstore.google.com/detail/privacy-bulk-actions-for/pelinmfbokdifnjjilngclecifphnlpp).
 2. Klikněte na tlačítko **Přidat do Chromu**.
 3. Rozšíření bude automaticky nainstalováno a připraveno k použití.
 
@@ -48,7 +48,7 @@ This significantly speeds up the workflow when configuring complex business case
 ### Installation
 
 **From Google Chrome Web Store (Recommended)**
-1. Go to the extension's page on the [Google Chrome Web Store](https://chrome.google.com/webstore) *(link to be added after publication)*.
+1. Go to the extension's page on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/privacy-bulk-actions-for/pelinmfbokdifnjjilngclecifphnlpp).
 2. Click the **Add to Chrome** button.
 3. The extension will be automatically installed and ready to use.
 
