@@ -25,7 +25,7 @@
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center gap-2">
                     <img src="icon.png" alt="Logo" class="w-8 h-8 object-contain">
-                    <span class="font-bold text-slate-900 hidden sm:block">Privacy Bulk Actions for Caflou</span>
+                    <span class="font-bold text-slate-900 hidden sm:block">Privacy Bulk Actions</span>
                 </div>
                 
                 <div class="flex items-center gap-6">
@@ -111,7 +111,7 @@
         </div>
 
         <!-- How it works -->
-        <section class="bg-indigo-900 rounded-[2rem] p-8 sm:p-16 text-white overflow-hidden relative">
+        <section class="bg-indigo-900 rounded-[2rem] p-8 sm:p-16 text-white overflow-hidden relative mb-24">
             <div class="relative z-10">
                 <h2 class="text-3xl font-bold mb-10">
                     <span lang-content="cs">Jak to funguje</span>
@@ -181,7 +181,7 @@
                     </p>
                 </div>
                 <div class="flex-1 w-full">
-                    <img src="01-extension-ready-to-start.png" alt="Extension interface" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2">
+                    <img src="01-extension-ready-to-start.png" onclick="openLightbox(0)" alt="Extension interface" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2 cursor-pointer">
                 </div>
             </div>
 
@@ -202,7 +202,7 @@
                     </p>
                 </div>
                 <div class="flex-1 w-full">
-                    <img src="02-extension-in-progress.png" alt="Extension in progress" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2">
+                    <img src="02-extension-in-progress.png" onclick="openLightbox(1)" alt="Extension in progress" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2 cursor-pointer">
                 </div>
             </div>
 
@@ -223,7 +223,7 @@
                     </p>
                 </div>
                 <div class="flex-1 w-full">
-                    <img src="03-extension-finished.png" alt="Extension finished" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2">
+                    <img src="03-extension-finished.png" onclick="openLightbox(2)" alt="Extension finished" class="w-full h-auto rounded-lg shadow-xl border border-slate-200 transition-transform duration-500 hover:-translate-y-2 cursor-pointer">
                 </div>
             </div>
 
@@ -275,7 +275,7 @@
 
     <!-- Privacy Policy Modal -->
     <div id="privacy-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
-        <div class="modal-overlay absolute w-full h-full bg-slate-900 opacity-50" onclick="toggleModal()"></div>
+        <div class="modal-overlay absolute w-full h-full bg-slate-900 opacity-50 backdrop-blur-sm" onclick="toggleModal()"></div>
         
         <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto max-h-[90vh]">
             
@@ -330,6 +330,32 @@
         </div>
     </div>
 
+    <!-- Lightbox pro galerii screenshotů -->
+    <div id="lightbox" class="fixed inset-0 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center">
+        <!-- Tmavé pozadí s rozostřením (blur) -->
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeLightbox()"></div>
+        
+        <!-- Zavírací křížek -->
+        <button class="absolute top-6 right-6 text-white hover:text-slate-300 z-10 p-2" onclick="closeLightbox()">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <!-- Šipka doleva -->
+        <button class="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 text-white hover:text-slate-300 z-10 p-4 drop-shadow-md" onclick="changeLightboxImage(-1)">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <!-- Šipka doprava -->
+        <button class="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 text-white hover:text-slate-300 z-10 p-4 drop-shadow-md" onclick="changeLightboxImage(1)">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+
+        <!-- Zobrazený obrázek -->
+        <div class="relative z-10 max-w-[90vw] max-h-[90vh]">
+            <img id="lightbox-img" src="" alt="Detail obrazovky" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+        </div>
+    </div>
+
     <script>
         function setLanguage(lang) {
             document.documentElement.setAttribute('lang', lang);
@@ -347,6 +373,7 @@
             }
         }
 
+        // --- Privacy Modal Logic ---
         function toggleModal() {
             const body = document.querySelector('body');
             const modal = document.querySelector('#privacy-modal');
@@ -372,7 +399,67 @@
             }
         }
 
-        // Inicializace při načtení stránky
+        // --- Lightbox Logic ---
+        const lightboxImages = [
+            '01-extension-ready-to-start.png',
+            '02-extension-in-progress.png',
+            '03-extension-finished.png'
+        ];
+        let currentLightboxIndex = 0;
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = lightboxImages[currentLightboxIndex];
+            lightbox.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('opacity-0', 'pointer-events-none');
+            
+            // Skryjeme zablokování rolování stránky pouze tehdy, když není otevřen i Privacy Modal
+            const privacyModal = document.querySelector('#privacy-modal');
+            if (privacyModal && privacyModal.classList.contains('opacity-0')) {
+                document.body.classList.remove('modal-active');
+            }
+        }
+
+        function changeLightboxImage(step) {
+            currentLightboxIndex += step;
+            // Zajištění nekonečného cyklení (loop) při přepínání
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = lightboxImages.length - 1;
+            } else if (currentLightboxIndex >= lightboxImages.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = lightboxImages[currentLightboxIndex];
+        }
+
+        // Klávesové zkratky (Escape pro zavření obou modalů, šipky pro Lightbox)
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            const isLightboxOpen = !lightbox.classList.contains('opacity-0');
+            
+            if (isLightboxOpen) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') changeLightboxImage(-1);
+                if (e.key === 'ArrowRight') changeLightboxImage(1);
+            } else {
+                // Zachytávání Escape pro Privacy Modal (pokud lightbox zrovna není otevřen)
+                const privacyModal = document.querySelector('#privacy-modal');
+                if (privacyModal && !privacyModal.classList.contains('opacity-0') && e.key === 'Escape') {
+                    toggleModal();
+                }
+            }
+        });
+
+        // --- Inicializace ---
         window.addEventListener('load', () => {
             setLanguage('cs');
             // Automatické otevření pokud URL obsahuje #privacy
