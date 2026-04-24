@@ -8,6 +8,7 @@
 
 ### O rozšíření
 **Privacy Bulk Actions for Caflou** je rozšíření pro prohlížeč Google Chrome (Microsoft Edge a další), které přidává hromadné akce pro správu přístupových práv a soukromí v obchodních případech a projektech v systému Caflou.
+Víc informací zde: [Privacy Bulk Actions for Caflou | eD system a.s.](https://edsystemcz.github.io/privacy_bulk_actions_for_caflou/)
 
 ### Účel
 Systém Caflou standardně vyžaduje manuální nastavování práv (čtení, zápis, finance/zdraví) pro každého uživatele zvlášť. Toto rozšíření přidává do uživatelského rozhraní nástrojovou lištu, která umožňuje jedním kliknutím:
@@ -36,6 +37,7 @@ Výrazně tím urychluje práci při nastavování složitějších oprávnění
 
 ### About the Extension
 **Privacy Bulk Actions for Caflou** is a Google Chrome (Microsoft Edge and more) extension that adds bulk actions for managing access rights and privacy settings in the Caflou system.
+More info: [Privacy Bulk Actions for Caflou | eD system a.s.](https://edsystemcz.github.io/privacy_bulk_actions_for_caflou/)
 
 ### Purpose
 The Caflou system typically requires setting rights (read, write, health/finance) manually for each user individually. This extension adds a toolbar to the user interface that allows you to do the following with a single click:
