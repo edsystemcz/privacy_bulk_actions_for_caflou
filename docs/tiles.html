@@ -6,12 +6,16 @@
     <title>Chrome Web Store Assets Generator - CZ</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <style type="text/tailwindcss">
+        @variant dark (&:where(.dark, .dark *));
+    </style>
     <style>
         body {
             font-family: 'system-ui', sans-serif;
             background-color: #f1f5f9;
             padding: 40px;
         }
+        .dark body { background-color: #0f172a; }
         
         :root {
             --brand-red: #E86262;
@@ -29,6 +33,7 @@
             color: #64748b;
             font-weight: 600;
         }
+        .dark .label { color: #94a3b8; }
 
         .small-tile {
             width: 440px;
@@ -42,6 +47,8 @@
             justify-content: center;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
+        /* Malá dlaždice se tmavému módu umí přizpůsobit */
+        .dark .small-tile { background: #1e293b; border-color: #334155; }
 
         .large-marquee {
             width: 1400px;
@@ -60,28 +67,31 @@
         }
     </style>
 </head>
-<body>
+<body class="transition-colors">
+    <div class="fixed top-4 right-4 z-50">
+        <button onclick="document.documentElement.classList.toggle('dark')" class="px-4 py-2 bg-slate-800 text-white rounded-lg shadow-lg font-bold text-sm">
+            Přepnout Dark Mode Generátor
+        </button>
+    </div>
 
-    <!-- 1. MALÁ DLAŽDICE (440 x 280) -->
     <div class="canvas-container">
         <div class="label">Malá propagační dlaždice - CZ (440 × 280 px)</div>
         <div id="small-tile-cz" class="small-tile border border-slate-200">
-            <div class="blob bg-[#3F468E] w-48 h-48 -top-10 -right-10 rounded-full"></div>
-            <div class="blob bg-[#469B77] w-32 h-32 -bottom-10 -left-10 rounded-full"></div>
+            <div class="blob bg-[#3F468E] w-48 h-48 -top-10 -right-10 rounded-full opacity-30 dark:opacity-50"></div>
+            <div class="blob bg-[#469B77] w-32 h-32 -bottom-10 -left-10 rounded-full opacity-30 dark:opacity-50"></div>
             
             <div class="relative z-10 flex flex-col items-center">
-                <img src="assets/icon.png" alt="Logo" class="w-24 h-24 mb-4">
+                <img src="assets/icon.png" alt="Logo" class="w-24 h-24 mb-4 drop-shadow-md">
                 <div class="text-center px-4">
-                    <h1 class="text-[#3F468E] text-2xl font-extrabold leading-tight tracking-tight uppercase">
+                    <h1 class="text-[#3F468E] dark:text-indigo-400 text-2xl font-extrabold leading-tight tracking-tight uppercase transition-colors">
                         Privacy Bulk Actions
                     </h1>
-                    <p class="text-slate-500 text-sm font-semibold tracking-widest uppercase">for Caflou</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-widest uppercase transition-colors">for Caflou</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. VELKÁ DLAŽDICE (1400 x 560) -->
     <div class="canvas-container">
         <div class="label">Dlaždice propagačního textu - CZ (1400 × 560 px)</div>
         <div id="large-marquee-cz" class="large-marquee border border-slate-200 bg-slate-900">
@@ -121,11 +131,10 @@
                     <div class="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 shadow-2xl relative">
                         <img src="assets/icon.png" alt="Logo" class="w-64 h-64 drop-shadow-2xl">
                         
-                        <!-- Realistický náhled ovládacího panelu s 3 tlačítky -->
-                        <div class="absolute -bottom-8 -left-12 bg-white p-4 rounded-2xl shadow-2xl flex flex-col gap-2 border border-slate-200">
+                        <div class="absolute -bottom-8 -left-12 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-2xl flex flex-col gap-2 border border-slate-200 dark:border-slate-700 transition-colors">
                             <div class="flex gap-2">
-                                <div class="px-3 py-1.5 bg-white border border-[#9fb0c7] rounded-lg text-[10px] font-bold text-[#2f4058] whitespace-nowrap">VŠE ODŠKRTNOUT</div>
-                                <div class="px-3 py-1.5 bg-white border border-[#9fb0c7] rounded-lg text-[10px] font-bold text-[#2f4058] whitespace-nowrap">VŠE OBNOVIT (DLE ROLE)</div>
+                                <div class="px-3 py-1.5 bg-white dark:bg-transparent border border-[#9fb0c7] dark:border-slate-600 rounded-lg text-[10px] font-bold text-[#2f4058] dark:text-slate-300 whitespace-nowrap transition-colors">VŠE ODŠKRTNOUT</div>
+                                <div class="px-3 py-1.5 bg-white dark:bg-transparent border border-[#9fb0c7] dark:border-slate-600 rounded-lg text-[10px] font-bold text-[#2f4058] dark:text-slate-300 whitespace-nowrap transition-colors">VŠE OBNOVIT (DLE ROLE)</div>
                             </div>
                             <div class="px-3 py-1.5 bg-[#469B77] rounded-lg text-[10px] font-bold text-white shadow-lg shadow-green-900/20 uppercase text-center">Všem povolit vše</div>
                         </div>
@@ -135,8 +144,8 @@
         </div>
     </div>
 
-    <div class="max-w-xl text-sm text-slate-500 leading-relaxed bg-white p-6 rounded-xl border border-slate-200">
-        <p class="font-bold text-slate-800 mb-2">Instrukce pro export (česká verze):</p>
+    <div class="max-w-xl text-sm text-slate-500 dark:text-slate-400 leading-relaxed bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
+        <p class="font-bold text-slate-800 dark:text-white mb-2">Instrukce pro export (česká verze):</p>
         1. Soubor <strong>icon.png</strong> musí být se složce /assets/.<br>
         2. Otevřete soubor v Chrome a stiskněte <strong>F12</strong>.<br>
         3. Vyberte dlaždici (<code>div#small-tile-cz</code> nebo <code>div#large-marquee-cz</code>).<br>
