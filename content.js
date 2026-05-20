@@ -319,22 +319,26 @@
     );
   }
 
-  function ensureStyles() {
+function ensureStyles() {
     if (document.getElementById(UI.styleId)) return;
 
     const style = document.createElement('style');
     style.id = UI.styleId;
     style.textContent = `
+      /* =========================================
+         Common styles and legacy theme (Default)
+         ========================================= */
       #${UI.toolbarId} {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 12px;
         align-items: center;
-        margin: 0 0 12px 0;
-        padding: 10px 12px;
-        border: 1px solid #d8dee8;
-        background: #f7f9fc;
-        border-radius: 8px;
+        margin: 0 0 16px 0;
+        padding: 12px 16px;
+        background-color: var(--white, #f7f9fc);
+        border: 1px solid var(--form-outline, #d8dee8);
+        border-radius: 2px;
+        color: var(--black, #333d4c);
       }
       #${UI.toolbarId} .tm-privacy-buttons {
         display: flex;
@@ -343,33 +347,69 @@
       }
       #${UI.toolbarId} button {
         appearance: none;
-        border: 1px solid #9fb0c7;
-        background: #fff;
-        color: #2f4058;
-        padding: 6px 10px;
-        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        /* Opravený fallback na čistě bílou pro staré téma */
+        background-color: var(--white, #fff);
+        color: var(--blue, #667a98);
+        border: 1px solid var(--blue, #667a98);
+        padding: 3px 16px;
+        border-radius: 2px;
         cursor: pointer;
-        font-size: 13px;
-        line-height: 1.2;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+        transition: all 0.2s;
+        box-shadow: none;
       }
-      #${UI.toolbarId} button:hover:not(:disabled) {
-        background: #f0f4fa;
+      #${UI.toolbarId} button:hover:not(:disabled),
+      #${UI.toolbarId} button:focus:not(:disabled) {
+        background-color: var(--shades-blue-00, #667a98);
+        color: var(--blue, #fff);
+        outline: none;
       }
       #${UI.toolbarId} button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+        cursor: default;
+        pointer-events: none;
+        color: var(--shades-black-50, rgba(102, 122, 152, 0.6));
+        background-color: var(--shades-black-00, #f7f9fc);
+        border-color: var(--shades-black-00, rgba(102, 122, 152, 0.6));
       }
       #${UI.toolbarId} .tm-privacy-status {
-        min-height: 20px;
-        font-size: 13px;
-        color: #4a5a72;
-        line-height: 1.45;
+        min-height: 24px;
+        font-size: 14px;
+        color: var(--black, #333d4c);
+        line-height: 24px;
       }
       #${UI.toolbarId} .tm-privacy-status[data-type="error"] {
-        color: #b42318;
+        color: var(--strawberry, #eb5757);
       }
       #${UI.toolbarId} .tm-privacy-status[data-type="success"] {
-        color: #067647;
+        color: var(--green, #3fab79);
+      }
+
+      /* =========================================
+         New Theme (2026 - beta) - overwrites
+         ========================================= */
+      html.light-theme #${UI.toolbarId},
+      html.dark-theme #${UI.toolbarId},
+      html.auto-theme #${UI.toolbarId} {
+        border-radius: 4px;
+      }
+      
+      html.light-theme #${UI.toolbarId} button,
+      html.dark-theme #${UI.toolbarId} button,
+      html.auto-theme #${UI.toolbarId} button {
+        padding: 7px 19px;
+        font-size: 16px;
+        border-radius: var(--btn-border-radius, 6px);
+      }
+      
+      html.light-theme #${UI.toolbarId} .tm-privacy-status,
+      html.dark-theme #${UI.toolbarId} .tm-privacy-status,
+      html.auto-theme #${UI.toolbarId} .tm-privacy-status {
+        font-size: 16px;
       }
     `;
     document.head.appendChild(style);
