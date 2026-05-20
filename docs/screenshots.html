@@ -6,6 +6,9 @@
     <title>Propagační screenshoty pro Caflou Privacy Bulk</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <style type="text/tailwindcss">
+        @variant dark (&:where(.dark, .dark *));
+    </style>
     <style>
         :root {
             --brand-red: #E86262;
@@ -17,16 +20,18 @@
             background-color: #e2e8f0;
             padding: 50px;
         }
+        .dark body { background-color: #0f172a; }
+        
         .screenshot-container {
             width: 1280px;
             height: 800px;
-            background: white;
             margin-bottom: 80px;
             position: relative;
             overflow: hidden;
             display: flex;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
+        
         .sidebar {
             width: 400px;
             height: 100%;
@@ -38,15 +43,17 @@
             justify-content: center;
             z-index: 10;
         }
+        .dark .sidebar { background-color: #1e1b4b; } /* Tmavší modrá pro dark mode */
+        
         .main-content {
             flex: 1;
-            background-color: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px;
             position: relative;
         }
+        
         .app-screenshot {
             width: auto;
             height: 100%;
@@ -54,6 +61,8 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
             border: 1px solid #cbd5e1;
         }
+        .dark .app-screenshot { border-color: #334155; }
+        
         .badge {
             display: inline-block;
             padding: 6px 12px;
@@ -72,12 +81,17 @@
         }
     </style>
 </head>
-<body>
+<body class="transition-colors">
 
-    <!-- SCREENSHOT 1: ÚVOD -->
-    <div id="slide-1" class="screenshot-container">
+    <div class="fixed top-4 right-4 z-50">
+        <button onclick="document.documentElement.classList.toggle('dark')" class="px-4 py-2 bg-slate-800 text-white rounded-lg shadow-lg font-bold text-sm">
+            Přepnout Dark Mode Generátor
+        </button>
+    </div>
+
+    <div id="slide-1" class="screenshot-container bg-white dark:bg-slate-900">
         <div class="sidebar">
-            <div class="badge bg-indigo-400">Nová funkce</div>
+            <div class="badge bg-indigo-400 dark:bg-indigo-600">Nová funkce</div>
             <h1 class="text-4xl font-extrabold mb-6 leading-tight">Hromadná správa práv v Caflou</h1>
             <p class="text-lg opacity-80 font-medium">
                 Přidejte do rozhraní tři chytrá tlačítka pro bleskové nastavení soukromí celého týmu.
@@ -93,16 +107,15 @@
                 </div>
             </div>
         </div>
-        <div class="main-content">
-            <div class="blob bg-indigo-400 w-96 h-96 -top-20 -right-20 rounded-full"></div>
+        <div class="main-content bg-slate-50 dark:bg-slate-800">
+            <div class="blob bg-indigo-400 dark:bg-indigo-500 w-96 h-96 -top-20 -right-20 rounded-full"></div>
             <img src="assets/01-extension-ready-to-start.png" class="app-screenshot relative z-10" alt="Rozšíření připraveno">
         </div>
     </div>
 
-    <!-- SCREENSHOT 2: PRŮBĚH -->
-    <div id="slide-2" class="screenshot-container">
+    <div id="slide-2" class="screenshot-container bg-white dark:bg-slate-900">
         <div class="sidebar">
-            <div class="badge bg-red-400">Úspora času</div>
+            <div class="badge bg-red-400 dark:bg-red-600">Úspora času</div>
             <h1 class="text-4xl font-extrabold mb-6 leading-tight">Automatické stránkování</h1>
             <p class="text-lg opacity-80 font-medium">
                 Rozšíření samo projde všechny stránky se seznamem uživatelů a aplikuje změny za vás.
@@ -111,16 +124,15 @@
                 <p class="text-sm italic">"Už žádné ruční proklikávání desítek stránek u velkých projektů."</p>
             </div>
         </div>
-        <div class="main-content">
-            <div class="blob bg-red-400 w-96 h-96 -bottom-20 -right-20 rounded-full"></div>
+        <div class="main-content bg-slate-50 dark:bg-slate-800">
+            <div class="blob bg-red-400 dark:bg-red-500 w-96 h-96 -bottom-20 -right-20 rounded-full"></div>
             <img src="assets/02-extension-in-progress.png" class="app-screenshot relative z-10" alt="Probíhající akce">
         </div>
     </div>
 
-    <!-- SCREENSHOT 3: HOTOVO -->
-    <div id="slide-3" class="screenshot-container">
+    <div id="slide-3" class="screenshot-container bg-white dark:bg-slate-900">
         <div class="sidebar">
-            <div class="badge bg-teal-500">Efektivita</div>
+            <div class="badge bg-teal-500 dark:bg-teal-600">Efektivita</div>
             <h1 class="text-4xl font-extrabold mb-6 leading-tight">Hotovo během vteřin</h1>
             <p class="text-lg opacity-80 font-medium">
                 Po dokončení hromadné akce stačí jednou kliknout na "Uložit" a máte hotovo.
@@ -136,24 +148,21 @@
                 </div>
             </div>
         </div>
-        <div class="main-content">
-            <div class="blob bg-teal-500 w-96 h-96 -top-20 -left-20 rounded-full"></div>
+        <div class="main-content bg-slate-50 dark:bg-slate-800">
+            <div class="blob bg-teal-500 dark:bg-teal-400 w-96 h-96 -top-20 -left-20 rounded-full"></div>
             <img src="assets/03-extension-finished.png" class="app-screenshot relative z-10" alt="Akce dokončena">
         </div>
     </div>
 
-    <!-- Exportní instrukce -->
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
+    <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 dark:text-slate-200 p-8 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl font-bold mb-4">Jak vyexportovat screenshoty:</h2>
-        <ol class="list-decimal ml-6 space-y-2 text-slate-600">
-            <li>Ujistěte se, že máte soubory <strong>01...png, 02...png a 03...png</strong> ve složce /assets/.</li>
-            <li>Otevřete tento soubor v prohlížeči Chrome.</li>
+        <ol class="list-decimal ml-6 space-y-2 text-slate-600 dark:text-slate-400">
+            <li>Pokud fotíte pro Dark Mode, nejdřív si uložte nové tmavé PNG z Caflou a v kódu sem do <code>src="..."</code> přepište jejich název.</li>
             <li>Stiskněte <strong>F12</strong> a aktivujte nástroj pro výběr elementu (Ctrl+Shift+C).</li>
             <li>Klikněte na kontejner screenshotu (např. <code>div#slide-1</code>).</li>
             <li>V DevTools stiskněte <strong>Ctrl+Shift+P</strong>, napište <strong>"Capture node screenshot"</strong> a potvrďte.</li>
             <li>Prohlížeč vám stáhne čistý PNG obrázek v rozměru 1280x800 px připravený pro Web Store.</li>
         </ol>
     </div>
-
 </body>
 </html>
